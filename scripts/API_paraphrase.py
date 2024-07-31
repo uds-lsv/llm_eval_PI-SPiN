@@ -50,7 +50,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-iFile", '--inputFile', help="path to the input data file",
-                        default=None#/projects/SFB_A4/Corpora/TaPaCo/data/TaPaCo_P1_splits/TaPaCo_testset_P1_al
+                        default=None
                         )
     parser.add_argument("-sep", '--separator', help="delimiter for the data file(s)",
                         default="\t")
