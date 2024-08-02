@@ -2,3 +2,9 @@
 ### Anupama Chingacham, Miaoran Zhang, Vera Demberg, Dietrich Klakow
 
 This repository consists of code and data (including human evaluation) created for our HuCLLM@ACL 2024 paper. 
+
+#### Standard Prompting
+#### Prompt-and-Select
+#### Evaluate LLM
+##### Automatic Evaluation
+##### Human Evaluation
