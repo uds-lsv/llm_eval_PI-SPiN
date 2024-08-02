@@ -3,7 +3,7 @@
 
 This repository consists of code and data (including human evaluation) created for our HuCLLM@ACL 2024 paper. 
 
-![alt text](https://github.com/uds-lsv/llm_eval_PI-SPiN/images/PI-SPiN_pipeline.png)
+![alt text](https://github.com/uds-lsv/llm_eval_PI-SPiN/blob/main/images/PI-SPiN_pipeline.png)
 
 #### Standard Prompting
 #### Prompt-and-Select
