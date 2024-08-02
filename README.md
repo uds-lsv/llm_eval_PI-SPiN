@@ -3,6 +3,8 @@
 
 This repository consists of code and data (including human evaluation) created for our HuCLLM@ACL 2024 paper. 
 
+![alt text](https://github.com/achingacham/)
+
 #### Standard Prompting
 #### Prompt-and-Select
 #### Evaluate LLM
