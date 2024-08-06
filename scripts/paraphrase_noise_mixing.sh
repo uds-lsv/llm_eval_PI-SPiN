@@ -4,7 +4,7 @@
 # 3. additive noise mixing (for a given noise file and SNR(s))
 
 #Step 0: set the execution environment
-source /data/users/achingacham/anaconda3/etc/profile.d/conda.sh
+source path_to/conda.sh
 conda activate pytorch_1_6_clone  #pytorch_1_6
 
 #Step 3: additive noise mixing
@@ -14,7 +14,7 @@ conda activate pytorch_1_6_clone  #pytorch_1_6
 # ---------------------------------------------------------------------------------
 #  UPDATE the following variables with correct values before execution
 
-noiseMixingFile="/nethome/achingacham/sfba4_scripts/utils/create_mixed_audio_file.py"
+noiseMixingFile="utils/create_mixed_audio_file.py"
 
 dir_path_suffix=$1
 dir_identifiers=$2 #a space separated ids
@@ -111,7 +111,7 @@ do
     paste $input_file "/tmp/$tmp_id"_utt_path.txt > $noisy_utt_outputfile_path
 
     echo "STOI calculation for: $noisy_utt_outputfile_path"
-    stoi_script="/nethome/achingacham/sfba4_scripts/utils/get_stoi.py"
+    stoi_script="utils/get_stoi.py"
 
     python3 $stoi_script  -inFile "$noisy_utt_outputfile_path"  \
                       -outFile "$stoi_outputfile_path" \

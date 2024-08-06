@@ -4,7 +4,7 @@
 # 2. speech synthesis
 
 #Step 0: set the execution environment
-source /data/users/achingacham/anaconda3/etc/profile.d/conda.sh
+source /path_to/conda.sh
 conda activate pytorch_1_6_clone  #pytorch_1_6
 
 
@@ -15,7 +15,7 @@ conda activate pytorch_1_6_clone  #pytorch_1_6
 # ---------------------------------------------------------------------------------
 # UPDATE the following variables with correct values before execution
 
-synthesisFile="/nethome/achingacham/sfba4_scripts/utils/TTS_tacotron.py"
+synthesisFile="utils/TTS_tacotron.py"
 
 INPUT_DIR=$1
 INPUT_FILE=$2

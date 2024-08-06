@@ -12,15 +12,10 @@
 
 #Step 0: set the execution environment
 
-HOME="/nethome/achingacham/"
-####IMPORTANT if runing on Cluster; rename CUDA devices
-#source /nethome/achingacham/HTCondor_prep/scripts/setup.sh
-# comment this for Step 4 / uncomment it only for step 1
+source /path_to/conda.sh
+conda activate pytorch_1_6_clone
 
-source /data/users/achingacham/anaconda3/etc/profile.d/conda.sh
-conda activate pytorch_1_6_clone  #pytorch_1_6
-
-working_dir="/nethome/achingacham/PycharmProjects/step1_step4_noise_modeling/Step1_PipelineExecution/data_paraphrases_in_noise"
+working_dir="./scripts/"
 
 ####### ASSIGN INPUTS ######
 # Step 1: paraphrase generation (eg: TaPaCo)
@@ -38,7 +33,7 @@ s2_extra_columns="paraphrases_id" # a space separated list of columns (numbers/n
 # Step 3. additive noise mixing and STOI calculation
 s3_dir_path_suffix="$s2_INPUT_DIR/$s2_INPUT_FILE-TTS-"
 s3_dir_identifiers="system_response" #"system_response_1 system_response_2 system_response_3 system_response_4 system_response_5 system_response_6 system_response_7 system_response_8 system_response_9 system_response_10 system_response_11 system_response_12" #"input_text system_response_1 system_response_2 system_response_3 system_response_4 system_response_5 system_response_6" #a space separated ids
-s3_noise_file_path="/projects/SFB_A4/AudioRepo/noises_5/babble"
+s3_noise_file_path="/path_to/noises_5/babble"
 s3_SNRs="-5" #a space separated ids
 s3_clean_utt_col_num=4  #column numbers begin with 1
 s3_pp_id_col_num=2  #column numbers begin with 1
@@ -57,32 +52,32 @@ s4_output_file_prefix="$s2_INPUT_DIR/$s2_INPUT_FILE" #s4_output_file_prefix="$s1
 
 ####### EXECUTE SCRIPTS ######
 ## Step 1: paraphrase generation
-#bash $working_dir/paraphrase_generation.sh \
-# "$s1_input_file_path" "$s1_input_text_column"
+bash $working_dir/paraphrase_generation_pas.sh \
+ "$s1_input_file_path" "$s1_input_text_column"
 
 
 echo "End of Step 1"
 
 ## Step 2: speech synthesis
-# bash $working_dir/paraphrase_speech_synthesis.sh \
-# "$s2_INPUT_DIR" "$s2_INPUT_FILE" \
-# "$s2_text_columns" "$s2_extra_columns"
-#echo -e "org-text\t$s2_extra_columns\ttext\tclean_utt_path" > "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt
-#tail -n +2 "$s2_INPUT_DIR/$s2_INPUT_FILE-TTS-"*/text2speech.txt >> "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt
-#sed -i "/==>/d" "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt  #  delete unneccary file path
-#sed -i "/^$/d" "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt   #  delete blank lines
-#echo "Check out: "$s2_INPUT_DIR/$s2_INPUT_FILE-"txt2speech_all.txt"
+ bash $working_dir/paraphrase_speech_synthesis.sh \
+ "$s2_INPUT_DIR" "$s2_INPUT_FILE" \
+ "$s2_text_columns" "$s2_extra_columns"
+echo -e "org-text\t$s2_extra_columns\ttext\tclean_utt_path" > "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt
+tail -n +2 "$s2_INPUT_DIR/$s2_INPUT_FILE-TTS-"*/text2speech.txt >> "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt
+sed -i "/==>/d" "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt  #  delete unneccary file path
+sed -i "/^$/d" "$s2_INPUT_DIR/$s2_INPUT_FILE-"text2speech_all.txt   #  delete blank lines
+echo "Check out: "$s2_INPUT_DIR/$s2_INPUT_FILE-"txt2speech_all.txt"
 
 echo "End of Step 2"
 
 ## 3. additive noise mixing
 
-#bash $working_dir/paraphrase_noise_mixing.sh \
-#      "$s3_dir_path_suffix" \
-#      "$s3_dir_identifiers" \
-#      "$s3_noise_file_path" "$s3_SNRs" \
-#      "$s3_clean_utt_col_num" \
-#      "$s3_pp_id_col_num"
+bash $working_dir/paraphrase_noise_mixing.sh \
+      "$s3_dir_path_suffix" \
+      "$s3_dir_identifiers" \
+      "$s3_noise_file_path" "$s3_SNRs" \
+      "$s3_clean_utt_col_num" \
+      "$s3_pp_id_col_num"
 
 echo "End of Step 3"
 
@@ -98,19 +93,3 @@ bash $working_dir/best_hypothesis_selection.sh \
 echo "End of Step 4"
 
 
-# Extra steps: prepare a directory with a list of all stimuli audio [for human experiment]
-# bash /nethome/achingacham/PycharmProjects/general_scripts/bashScripts/make_listening_exp_dir.sh \
-# a_TAB_delimited_input_file \
-# the_col_num_abs_filepath \
-# an_output_dir
-
-# Add an additional column for Noise-level
-# n=0; echo "NoiseLevel" > SNR_$n.txt; for i in `seq 1 30`; do echo "SNR_$n" >> SNR_$n.txt; done
-
-# Report correlation in best-hypothesis selection [to verify STOI-based ranking] ##
-# list_input_files=`echo $s4_output_file_prefix*best_hypo.txt.idx`
-# [Pearson correlation is incorrect] python3 get_correlation.py --list_input_files  "$list_input_files" --input_column 'best_STOI-idx'
-
-# combine multiple files; ( to create one data file)
-# python3 ~/PycharmProjects/LLaMA/scripts/combine_files.py \
-# -iFiles "path/to/multiple/files;path/to/multiple/files;path/to/multiple/files"
