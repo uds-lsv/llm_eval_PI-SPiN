@@ -14,21 +14,23 @@ Use the following steps for reproducing our evaluation results:
 
 
 #### Standard Prompting
-
-
+`` bash scripts/paraphrase_generation_zsl.sh ``
 
 ---
 #### Prompt-and-Select
+`` bash multi_step_exec.sh`` with ``scripts/paraphrase_generation_pas.sh`` in step 1.
 
 ---
 #### Evaluate LLM
 
----
 ##### Automatic Evaluation
+``bash ./get_para_metrics.sh``
 
----
 ##### Human Evaluation
-
+Based the PWR-STOI of paraphrase pairs, two subsets of evaluation set is created.
+ 
+1. Top 30 pairs: data/human_evaluation/top_30_pairs.txt
+2. Random 30 pairs: data/human_evaluation/random_30_pairs.txt
 
 ---
 

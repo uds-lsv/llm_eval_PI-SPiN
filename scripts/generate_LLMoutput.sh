@@ -1,7 +1,7 @@
 
 
 #Step 0: set the execution environment
-source /data/users/achingacham/anaconda3/etc/profile.d/conda.sh
+source path_to/conda.sh
 conda activate pytorch_1_6_clone  #pytorch_1_6
 
 

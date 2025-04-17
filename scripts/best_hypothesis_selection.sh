@@ -4,7 +4,7 @@
 # 4. best hypothesis selection (based on STOI)
 
 #Step 0: set the execution environment
-source /data/users/achingacham/anaconda3/etc/profile.d/conda.sh
+source path_to/conda.sh
 conda activate pytorch_1_6_clone  #pytorch_1_6
 
 #Step 4: best hypothesis (higher STOI) selection
@@ -15,7 +15,7 @@ conda activate pytorch_1_6_clone  #pytorch_1_6
 # UPDATE the following variables with correct values before execution
 
 
-script_dir="/nethome/achingacham/PycharmProjects/chatGPT/scripts/"
+script_dir="./"
 
 input_dir=$1
 file_ids=$2
@@ -62,10 +62,10 @@ do
         #-iFF '/projects/SFB_A4/A4-IntelligibleParaphrasesinNoise/data/HE_300_600/SWDA_short_utterances_300_600.tsv-08-11-2023,233716_split_cols-babble_-5.txt-best_hypo.txt_stimuli_random_30.txt'
 
   # Get para-metrics on the generated utterances:
-  bash /nethome/achingacham/PycharmProjects/para_metrics/para_metrics/get_para_metrics.sh "$output_file-best_hypo.txt_stimuli_all_with_trivial.txt"
+  bash ./get_para_metrics.sh "$output_file-best_hypo.txt_stimuli_all_with_trivial.txt"
 
   # Get para-metrics on SELECTED generated utterances:
-  bash /nethome/achingacham/PycharmProjects/para_metrics/para_metrics/get_para_metrics.sh "$output_file-best_hypo.txt_selected_stimuli.txt"
+  bash ./get_para_metrics.sh "$output_file-best_hypo.txt_selected_stimuli.txt"
 
   # for files with an additional comparison step
 #  python3 $script_dir/select_best_hypo.py \
